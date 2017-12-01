@@ -1,8 +1,5 @@
 
 
-
-
-
 exports.api_index = function(req, res){
     res.send('testing')
 };
