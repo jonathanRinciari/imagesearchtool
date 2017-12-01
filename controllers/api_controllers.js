@@ -44,7 +44,7 @@ exports.image_search = function(req, res){
                     "url": imageList[i].link,
                     "snippet": imageList[i].snippet,
                     "thumbnail":imageList[i].image.thumbnailLink,
-                    "context": imageList[i].displayLink
+                    "context": `http://${imageList[i].displayLink}`
                 }
                 search.push(images);
             }
