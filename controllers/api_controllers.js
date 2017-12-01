@@ -1,10 +1,31 @@
-
+var request = require('request');
 
 exports.api_index = function(req, res){
     res.send('testing')
 };
 
 exports.image_search = function(req, res){
+    var apiEndpoint = 'https://www.googleapis.com/customsearch/v1?key=';
+    var q = req.params.query;
+    var cx = process.env.GS_CX;
+    var key = process.env.GS_KEY;
+    var url = `${apiEndpoint}${key}&cx=${cx}&searchType=image&q=${q}&start=10`
+    
+    var requestObject = {
+        uri: url,
+        method: 'GET',
+        timeout: 10000
+    }
+    
+    request(requestObject, function(err, response, body){
+        if(err) throw err;
+        else {
+            var results = JSON.parse(body)
+            res.send(results.items)
+        }
+    })
+    
+    
 }
 
 exports.search_history = function(req, res){
