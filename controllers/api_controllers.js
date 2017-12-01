@@ -1,11 +1,18 @@
-
+var googleImages = require('google-images')
+const client = new googleImages('process.env.GS_CX', 'process.env.GS_KEY')
 
 exports.api_index = function(req, res){
     res.send('testing')
 };
 
 exports.image_search = function(req, res){
-    res.send(`Searching for ${req.params.query}`)
+    client.search(req.params.query)
+        .then(images => {
+            console.log(images[0])
+        })
+        .catch(err){
+            console.log(err)
+        }
 }
 
 exports.search_history = function(req, res){
