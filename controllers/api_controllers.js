@@ -2,12 +2,13 @@ var request = require('request');
 var History = require('../model/historyModel')
 var moment = require('moment');
 moment().format()
+
+
 exports.api_index = function(req, res){
     res.send('testing')
 };
 
 exports.image_search = function(req, res){
-
 
     var apiEndpoint = 'https://www.googleapis.com/customsearch/v1?key=';
     var q = req.params.query;
@@ -42,7 +43,7 @@ exports.image_search = function(req, res){
                 var images = {
                     "url": imageList[i].link,
                     "snippet": imageList[i].snippet,
-                    "thumbnail":imageList[i].thumbnailLink,
+                    "thumbnail":imageList[i].image.thumbnailLink,
                     "context": imageList[i].displayLink
                 }
                 search.push(images);
