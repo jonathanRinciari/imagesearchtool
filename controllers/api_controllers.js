@@ -11,9 +11,10 @@ exports.image_search = function(req, res){
 
     var apiEndpoint = 'https://www.googleapis.com/customsearch/v1?key=';
     var q = req.params.query;
+    var start = req.query.offset
     var cx = process.env.GS_CX;
     var key = process.env.GS_KEY;
-    var url = `${apiEndpoint}${key}&cx=${cx}&searchType=image&q=${q}&start=10`
+    var url = `${apiEndpoint}${key}&cx=${cx}&searchType=image&q=${q}&start=${start}`
     
     var requestObject = {
         uri: url,
@@ -25,13 +26,28 @@ exports.image_search = function(req, res){
         if(err) throw err;
         else {
             var d = new Date();
-            var historyObj = {
+            var searchDate = d.toJSON();
+            var historyObj = new History ({
                 searchTerm: q,
-                date: d
-            }
-            History.save(historyObj, function(err){
-                if(err) throw err;
+                date: searchDate
             })
+            historyObj.save(function(err){
+                if(err) throw err;
+                console.log('Saved')
+            })
+            var search = [];
+            var result = JSON.parse(body)
+            var imageList = result.items
+            for(var i = 0; i < imageList.length; i++){
+                var images = {
+                    "url": imageList[i].link,
+                    "snippet": imageList[i].snippet,
+                    "thumbnail":imageList[i].thumbnailLink,
+                    "context": imageList[i].displayLink
+                }
+                search.push(images);
+            }
+            res.send(search)
         }
     })
     
