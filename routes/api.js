@@ -1,15 +1,12 @@
 var express = require('express');
 var router = express.Router();
+var api_controller = require('../controllers/api_controllers')
 
-router.get('/', function(req, res){
-    res.send('Instructions for API Usage')
-})
+router.get('/', api_controller.api_index)
 
-router.get('/imagesearch/:query', function(req, res){
-    res.send(`Searching for ${req.params.query}`)
-})
+router.get('/imagesearch', api_controller.search_redirect)
+router.get('/imagesearch/:query', api_controller.image_search)
 
-router.get('/latest', function(req, res){
-    res.send('returning latest searches')
-})
+router.get('/latest', api_controller.search_history)
+
 module.exports = router;
