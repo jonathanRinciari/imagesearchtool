@@ -7,8 +7,8 @@ exports.api_index = function(req, res){
 };
 
 exports.image_search = function(req, res){
-    var d = new Date();
-    console.log(moment(d, 'HH:MM'))
+
+
     var apiEndpoint = 'https://www.googleapis.com/customsearch/v1?key=';
     var q = req.params.query;
     var cx = process.env.GS_CX;
@@ -24,7 +24,14 @@ exports.image_search = function(req, res){
     request(requestObject, function(err, response, body){
         if(err) throw err;
         else {
-        
+            var d = new Date();
+            var historyObj = {
+                searchTerm: q,
+                date: d
+            }
+            History.save(historyObj, function(err){
+                if(err) throw err;
+            })
         }
     })
     
