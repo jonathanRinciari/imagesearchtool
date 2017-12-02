@@ -9,13 +9,18 @@ exports.api_index = function(req, res){
 };
 
 exports.image_search = function(req, res){
-
+    console.log('test')
     var apiEndpoint = 'https://www.googleapis.com/customsearch/v1?key=';
     var q = req.params.query;
     var start = req.query.offset
     var cx = process.env.GS_CX;
     var key = process.env.GS_KEY;
-    var url = `${apiEndpoint}${key}&cx=${cx}&searchType=image&q=${q}&start=${start}`
+    var url; 
+    if(req.query.offset != undefined){
+        url = `${apiEndpoint}${key}&cx=${cx}&searchType=image&q=${q}&start=${start}`
+    } else {
+        url = `${apiEndpoint}${key}&cx=${cx}&searchType=image&q=${q}`
+    }
     
     var requestObject = {
         uri: url,
@@ -24,6 +29,7 @@ exports.image_search = function(req, res){
     }
     
     request(requestObject, function(err, response, body){
+        console.log(body)
         if(err) throw err;
         else {
             var d = new Date();
@@ -39,6 +45,7 @@ exports.image_search = function(req, res){
             var search = [];
             var result = JSON.parse(body)
             var imageList = result.items
+            
             for(var i = 0; i < imageList.length; i++){
                 var images = {
                     "url": imageList[i].link,
@@ -56,7 +63,13 @@ exports.image_search = function(req, res){
 }
 
 exports.search_history = function(req, res){
-    res.send('returning latest searches')
+    var queryRes = History.find({}, {_id: 0, __v: 0});
+    queryRes.limit(10);
+    queryRes.sort({date: -1})
+    queryRes.exec(function(err, history){
+        if(err) throw err;
+        res.send(history)
+    })
 }
 
 exports.search_redirect = function(req, res){
