@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  h1 Image Seach Abstration Layour API
+  div(class="container")
+     p(class="instructions") 
+        | The <u>Objective</u> of the api is to allow the user to search for a image phrase
+        | using the google custom search api. The user will then receive back
+        | a link, snippet, thumbnail, and context for the search.
+  
+     p(class="instructions") 
+        | The api will also log the search entered by the user and store the phrase
+        | and date of the search. 
+  
+  ol
+    li 
+      | The api is accessed through the ../api/searchimage/ adding the term at the end
+      | and a JSON formatted array will be returned
+    li 
+      | The search history can be accesed through the ../api/latest router
+      | It will return the last 10 searches, with the term and date
+      
+  div(id="userStory")
+    h1 User Stories
+    ol
+      li 
+        | I can get the image URLs, alt text and page urls for a set of images 
+        | relating to a given search string.
+      li 
+        | I can paginate through the responses by adding a ?offset=2 
+        | parameter to the URL.
+      li 
+        | I can get a list of the most recently submitted search strings.
+
+    div
+      h1 Example
+      ul
+        li Search
+        li Latest

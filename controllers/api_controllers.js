@@ -5,7 +5,7 @@ moment().format()
 
 
 exports.api_index = function(req, res){
-    res.send('testing')
+    res.render('apiview', { title: 'Image Search Abstration Service' });
 };
 
 exports.image_search = function(req, res){
