@@ -1,6 +1,5 @@
 # Image Search Abstraction Layer
 
-##Objectives
 
 The *Objective* of the api is to allow the user to search for a image phrase using the google custom search api. The user will then receive back a link, snippet, thumbnail, and context for the search.
 
