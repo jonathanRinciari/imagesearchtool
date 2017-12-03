@@ -32,11 +32,11 @@ exports.image_search = function(req, res){
         console.log(body)
         if(err) throw err;
         else {
-            var d = new Date();
-            var searchDate = d.toJSON();
+            var d = moment();
+            d = d.format('MM-DD-YYYY HH:MM')
             var historyObj = new History ({
                 searchTerm: q,
-                date: searchDate
+                date: d
             })
             historyObj.save(function(err){
                 if(err) throw err;
