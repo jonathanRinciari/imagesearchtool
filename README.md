@@ -1,1 +1,1 @@
-# imagesearchtool
+# Image Search Abstration Layer API
